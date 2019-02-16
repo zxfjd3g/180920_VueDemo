@@ -1,17 +1,32 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox"/>
+      <input type="checkbox" v-model="isCheckAll"/>
     </label>
     <span>
-          <span>已完成0</span> / 全部2
+          <span>已完成{{completeSize}}</span> / 全部{{todos.length}}
         </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <button class="btn btn-danger" v-show="completeSize>0">清除已完成任务</button>
   </div>
 </template>
 
 <script>
-  export default {}
+  export default {
+    props: {
+      todos: Array
+    },
+
+    computed: {
+      // 已完成的数量
+      completeSize () {
+        return this.todos.reduce((pre, todo) => pre + (todo.complete ? 1 : 0), 0)
+      },
+      // 是否全选中
+      isCheckAll () {
+        return this.todos.length === this.completeSize
+      }
+    }
+  }
 </script>
 
 <style scoped>
