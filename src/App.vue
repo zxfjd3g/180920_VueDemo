@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
       <List :todos="todos" :deleteTodo="deleteTodo"/>
-      <Footer :todos="todos"/>
+      <Footer :todos="todos" :clearAllComplete="clearAllComplete" :selectAll="selectAll"/>
     </div>
   </div>
 </template>
@@ -34,6 +34,15 @@
 
       deleteTodo (index) {
         this.todos.splice(index, 1)
+      },
+
+      clearAllComplete () {
+        this.todos = this.todos.filter(todo => !todo.complete)
+      },
+
+      // 对所有todo进行选中/不选中
+      selectAll (check) {
+        this.todos.forEach(todo => todo.complete = check)
       }
     },
     components: {
