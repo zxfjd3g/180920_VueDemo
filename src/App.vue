@@ -16,14 +16,12 @@
   import List from './components/List.vue'
   import Footer from './components/Footer.vue'
 
+  import storageUtil from './util/storageUtil'
+
   export default {
     data () {
       return {
-        todos: [
-          {title: '吃饭', complete: false},
-          {title: '睡觉', complete: false},
-          {title: '打豆豆', complete: true},
-        ]
+        todos: storageUtil.getTodos()
       }
     },
 
@@ -43,6 +41,20 @@
       // 对所有todo进行选中/不选中
       selectAll (check) {
         this.todos.forEach(todo => todo.complete = check)
+      }
+    },
+
+    watch: {
+      todos: {
+        deep: true, // 深度监视
+        /*handler:  function (value)  {// value是todos最新的值
+          // 将todos最新的值的json数据保存到localStorage
+          storageUtil.saveTodos(value)
+        }*/
+        handler: storageUtil.saveTodos
+        /*handler: function (todos) {
+          localStorage.setItem('todos_key', JSON.stringify(todos))
+        }*/
       }
     },
     components: {
