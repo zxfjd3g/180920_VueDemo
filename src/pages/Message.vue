@@ -3,8 +3,11 @@
     <ul>
       <li v-for="m in messages" :key="m.id">
         <router-link :to="`/home/message/detail/${m.id}`">{{m.title}}</router-link>
+        &nbsp;<button @click="$router.push(`/home/message/detail/${m.id}`)">push查看</button>
+        &nbsp;<button @click="$router.replace(`/home/message/detail/${m.id}`)">replace查看</button>
       </li>
     </ul>
+    <button @click="$router.back()">回退</button>
     <hr>
     <router-view/>
   </div>
