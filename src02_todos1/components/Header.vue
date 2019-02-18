@@ -8,10 +8,10 @@
   export default {
     // 声明接收属性: 属性的名称/值的类型/必要性
     props: {
-      /*addTodo: {
+      addTodo: {
         type: Function,
         required: true
-      }*/
+      }
     },
 
     data () {
@@ -32,9 +32,7 @@
           complete: false
         }
         // 添加到todos中显示
-        // this.addTodo(todo)
-        // 分发自定义事件(addTodo)
-        this.$emit('addTodo', todo)
+        this.addTodo(todo)
 
         // 清除输入
         this.title = ''

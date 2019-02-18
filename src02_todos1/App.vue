@@ -1,15 +1,9 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <Header @addTodo="addTodo"/>
-      <List :todos="todos"/>
-      <Footer>
-        <input type="checkbox" v-model="isCheckAll" slot="left"/>
-        <span slot="middle">
-            <span>已完成{{completeSize}}</span> / 全部{{todos.length}}
-        </span>
-        <button class="btn btn-danger" slot="right" v-show="completeSize>0" @click="clearAllComplete">清除已完成任务</button>
-      </Footer>
+      <Header :addTodo="addTodo"/>
+      <List :todos="todos" :deleteTodo="deleteTodo"/>
+      <Footer :todos="todos" :clearAllComplete="clearAllComplete" :selectAll="selectAll"/>
     </div>
   </div>
 </template>
@@ -18,7 +12,6 @@
   1. 如何判断状态保存在哪个组件?  看数据是哪个组件需要还是哪些组件需要
   2. 更新状态数据的行为(方法)定义在哪个组件?  看状态数据在哪个组件
    */
-  import PubSub from 'pubsub-js'
   import Header from './components/Header.vue'
   import List from './components/List.vue'
   import Footer from './components/Footer.vue'
@@ -30,32 +23,6 @@
       return {
         todos: storageUtil.getTodos()
       }
-    },
-
-    computed: {
-      // 已完成的数量
-      completeSize () {
-        return this.todos.reduce((pre, todo) => pre + (todo.complete ? 1 : 0), 0)
-      },
-      // 是否全选中
-      isCheckAll: {
-        get () {
-          return this.todos.length === this.completeSize && this.completeSize>0
-        },
-
-        set (value) {// value: 最新的选中状态
-          this.selectAll(value)
-        }
-      }
-
-    },
-
-    mounted () {
-      // 订阅消息
-      PubSub.subscribe('deleteTodo', (msg, index) => {
-        this.deleteTodo(index)
-      })
-      // PubSub.subscribe('deleteTodo', this.deleteTodo)
     },
 
     methods: {

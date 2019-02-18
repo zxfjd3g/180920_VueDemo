@@ -1,6 +1,6 @@
 <template>
   <ul class="todo-main">
-    <Item v-for="(todo, index) in todos" :key="index" :todo="todo" :index="index"/>
+    <Item v-for="(todo, index) in todos" :key="index" :todo="todo" :deleteTodo="deleteTodo" :index="index"/>
   </ul>
 </template>
 
@@ -10,7 +10,7 @@
   export default {
     // 声明接收属性: 属性名
     // 所有接收的标签属性都会成功当前组件对象的属性
-    props: ['todos'],
+    props: ['todos', 'deleteTodo'],
 
 
     components: {
