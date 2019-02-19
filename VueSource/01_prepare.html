@@ -13,6 +13,15 @@
     <li>test1</li>
     <li>test2</li>
     <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
+    <li>test3</li>
   </ul>
 </div>
 
@@ -77,7 +86,44 @@
   console.log(p.hasOwnProperty('fullName'), p.hasOwnProperty('toString')) // true false
 
   //6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+  /*
+  DocumentFragment: 是内存中用来存储多个节点对象容器, 不与任意页面/页面节点对应
+  */
+  /*
+  <div id="demo">
+    <ul>
+      <li>test1</li>
+      <li>test2</li>
+      <li>test3</li>
+      <li>test3</li>
+      <li>test3</li>
+      <li>test3</li>
+      <li>test3</li>
+      <li>test3</li>
+    </ul>
+  </div>
+  */
+  // 创建一个内存中节点容器
+  const fragment = document.createDocumentFragment()
+  // 取出div中所有节点转移到fragment中
+  const div = document.getElementById('demo')
+  let child
+  while(child = div.firstChild) {
+    fragment.appendChild(child) // 从div中移除, 再添加为fragment的子节点
+  }
 
+  const nodes = fragment.children[0].childNodes
+
+  debugger
+
+  Array.prototype.slice.call(nodes).forEach(node => {
+    if(node.nodeType===1) { // 元素节点 li
+      node.textContent = 'atguigu' // 不会更新界面
+    }
+  })
+
+  // 将处理好所有节点添加为div
+  div.appendChild(fragment) // 批量更新界面
   /*
   可以让任意函数/方法成功任意指定对象的方法进行调用
   */
