@@ -6,5 +6,27 @@
 </head>
 <body>
 
+<div id="test">
+  <button v-on:click="hint">提示</button>
+</div>
+
+<script type="text/javascript" src="./js/mvvm/mvvm.js"></script>
+<script type="text/javascript" src="./js/mvvm/compile.js"></script>
+<script type="text/javascript" src="./js/mvvm/observer.js"></script>
+<script type="text/javascript" src="./js/mvvm/watcher.js"></script>
+<script type="text/javascript">
+  const vm = new MVVM({
+    el: '#test',
+    data: {
+      name: 'tom2'
+    },
+    methods: {
+      hint () {
+        alert(this.name)
+      }
+    }
+  })
+  RegExp.$1
+</script>
 </body>
 </html>
