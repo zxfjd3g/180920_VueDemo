@@ -85,8 +85,9 @@ Compile.prototype = {
         if (me.isEventDirective(dir)) {
           // 解析事件指令
           compileUtil.eventHandler(node, me.$vm, exp, dir);
-          // 普通指令
+        // 普通指令
         } else {
+          // 调用对应的解析工具函数处理
           compileUtil[dir] && compileUtil[dir](node, me.$vm, exp);
         }
 
@@ -166,7 +167,9 @@ var compileUtil = {
     // 调用更新函数第一次更新节点  ===> 实现初始化显示
     updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
+    // 为表达式创建对应的watcher对象
     new Watcher(vm, exp, function (value, oldValue) {
+      // 更新节点
       updaterFn && updaterFn(node, value, oldValue);
     });
   },
@@ -229,11 +232,7 @@ var updater = {
   // 更新节点的className属性
   classUpdater: function (node, value, oldValue) {
     var className = node.className;
-    className = className.replace(oldValue, '').replace(/\s$/, '');
-
-    var space = className && String(value) ? ' ' : '';
-
-    node.className = className + space + value;
+    node.className = className ? className + ' ' + value : value
   },
 
   // 更新节点的value属性
