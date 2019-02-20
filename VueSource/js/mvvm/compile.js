@@ -90,7 +90,9 @@ Compile.prototype = {
     }
 };
 
-// 指令处理集合
+/*
+用于编译的工具对象
+ */
 var compileUtil = {
     text: function(node, vm, exp) {
         this.bind(node, vm, exp, 'text');
@@ -164,6 +166,9 @@ var compileUtil = {
 };
 
 
+/*
+包含n个更新节点的方法的对象
+ */
 var updater = {
     textUpdater: function(node, value) {
         node.textContent = typeof value == 'undefined' ? '' : value;
