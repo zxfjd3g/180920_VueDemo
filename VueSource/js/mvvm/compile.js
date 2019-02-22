@@ -134,16 +134,21 @@ var compileUtil = {
 
   // 编译: v-model
   model: function (node, vm, exp) {
+    // 实现初始化显示, 创建一个对应的watcher
     this.bind(node, vm, exp, 'model');
 
     var me = this,
+      // 得到表达式对应的值
       val = this._getVMVal(vm, exp);
+    // 给节点绑定input监听(当输入发生任何改变时自动调用)
     node.addEventListener('input', function (e) {
+      // 得到最新的值
       var newValue = e.target.value;
       if (val === newValue) {
         return;
       }
 
+      // 将最新的值设置到表达式对应的属性上 ===>数据绑定的更新流程
       me._setVMVal(vm, exp, newValue);
       val = newValue;
     });
